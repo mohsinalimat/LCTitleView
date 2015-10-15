@@ -21,6 +21,7 @@
 @property (nonatomic, strong) NSArray *normalImages;
 @property (nonatomic, strong) NSArray *selectedImages;
 @property (nonatomic, assign) CGFloat betweenMargin;// button 的间距
+@property (nonatomic, strong) UIFont  *buttonFont;
 @property (nonatomic, assign) CGFloat buttonInsets;// button的左右宽度偏移量，为了加宽点击范围
 @property (nonatomic, assign) CGFloat contentWidth;// MSTitleView的宽度
 @property (nonatomic, strong) UIColor *buttonNormalColor;
@@ -35,6 +36,5 @@
 - (instancetype)initWithTitls:(NSArray *)titlsArray clickBlock:(void (^) (UIButton *button))block;
 - (void)changTitles:(NSArray<NSString *> *)titles atIndexs:(NSArray<NSNumber *> *)indexs;
 - (void)changButtonSelectedColors:(NSArray<UIColor *> *)colors atIndexs:(NSArray<NSNumber *> *)indexs;
-- (void)changLastImage:(UIImage *)image;
 
 @end

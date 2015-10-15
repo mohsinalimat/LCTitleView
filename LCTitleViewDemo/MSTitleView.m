@@ -7,11 +7,9 @@
 //
 
 #import "MSTitleView.h"
-#import <Masonry.h>
-#import "MSColor.h"
-#import "MSFont.h"
+#import "Masonry.h"
 
-static CGFloat const MSSelectionBetweenMargin = 15.0f;
+static CGFloat const MSSelectionBetweenMargin = 20.0f;
 static CGFloat const MSSelectionHeight = 2.0f;
 
 @interface MSTitleView ()
@@ -50,6 +48,7 @@ static CGFloat const MSSelectionHeight = 2.0f;
 
 - (void)initUI{
     self.contentView = [[UIView alloc] init];
+    self.backgroundColor = [UIColor clearColor];
     [self addSubview:self.contentView];
     [self.contentView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.center.equalTo(self);
@@ -57,16 +56,16 @@ static CGFloat const MSSelectionHeight = 2.0f;
         make.bottom.equalTo(self);
     }];
     
-    self.backgroundColor = [UIColor whiteColor];
-    UIView *lineView = [[UIView alloc] init];
-    lineView.backgroundColor = [MSColor smokeGray];
-    [self addSubview:lineView];
-    [lineView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.leading.equalTo(@0.0f);
-        make.trailing.equalTo(@0.0f);
-        make.bottom.equalTo(@0.0f);
-        make.height.equalTo(@0.5f);
-    }];
+//    self.backgroundColor = [UIColor whiteColor];
+//    UIView *lineView = [[UIView alloc] init];
+//    lineView.backgroundColor = [MSColor smokeGray];
+//    [self addSubview:lineView];
+//    [lineView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.leading.equalTo(@0.0f);
+//        make.trailing.equalTo(@0.0f);
+//        make.bottom.equalTo(@0.0f);
+//        make.height.equalTo(@0.5f);
+//    }];
 }
 
 - (NSMutableArray *)buttonArray{
@@ -91,7 +90,6 @@ static CGFloat const MSSelectionHeight = 2.0f;
             [button setTitle:title forState:UIControlStateNormal];
             button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
             button.backgroundColor = [UIColor clearColor];
-            button.titleLabel.font = [MSFont normal];
             button.tag = idx;
             [button addTarget:self action:@selector(titleButtonAction:) forControlEvents:UIControlEventTouchUpInside];
             [self.contentView addSubview:button];
@@ -122,19 +120,38 @@ static CGFloat const MSSelectionHeight = 2.0f;
 
 - (void)setNormalImages:(NSArray *)normalImages{
     _normalImages = normalImages;
-    [_normalImages enumerateObjectsUsingBlock:^(UIImage *image, NSUInteger idx, BOOL * _Nonnull stop) {
-        UIButton *button = self.buttonArray[idx];
-        [button setImage:image forState:UIControlStateNormal];
-    }];
+    if (_normalImages) {
+        [_normalImages enumerateObjectsUsingBlock:^(UIImage *image, NSUInteger idx, BOOL * _Nonnull stop) {
+            UIButton *button = self.buttonArray[idx];
+            [button setImage:image forState:UIControlStateNormal];
+            [button layoutIfNeeded];
+        }];
+    }
+    else{
+        [self.buttonArray enumerateObjectsUsingBlock:^(UIButton *button, NSUInteger idx, BOOL * _Nonnull stop) {
+            [button setImage:nil forState:UIControlStateNormal];
+            [button layoutIfNeeded];
+        }];
+    }
+    [self layoutSubviews];
 }
 
 - (void)setSelectedImages:(NSArray *)selectedImages{
     _selectedImages = selectedImages;
-    [_selectedImages enumerateObjectsUsingBlock:^(UIImage *image, NSUInteger idx, BOOL * _Nonnull stop) {
-        UIButton *button = self.buttonArray[idx];
-        [button setImage:image forState:UIControlStateSelected];
-        button.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 2, 0);
-    }];
+    if (_selectedImages) {
+        [_selectedImages enumerateObjectsUsingBlock:^(UIImage *image, NSUInteger idx, BOOL * _Nonnull stop) {
+            UIButton *button = self.buttonArray[idx];
+            [button setImage:image forState:UIControlStateSelected];
+            [button layoutIfNeeded];
+        }];
+    }
+    else{
+        [self.buttonArray enumerateObjectsUsingBlock:^(UIButton *button, NSUInteger idx, BOOL * _Nonnull stop) {
+            [button setImage:nil forState:UIControlStateSelected];
+            [button layoutIfNeeded];
+        }];
+    }
+    [self layoutSubviews];
 }
 
 
@@ -260,6 +277,15 @@ static CGFloat const MSSelectionHeight = 2.0f;
     [self layoutSubviews];
 }
 
+- (void)setButtonFont:(UIFont *)buttonFont{
+    _buttonFont = buttonFont;
+    [self.buttonArray enumerateObjectsUsingBlock:^(UIButton *button, NSUInteger idx, BOOL * _Nonnull stop) {
+        button.titleLabel.font = _buttonFont;
+        [button layoutIfNeeded];
+    }];
+    [self layoutSubviews];
+}
+
 - (void)layoutSubviews{
     UIButton *firstButton = self.buttonArray.firstObject;
     if (firstButton.frame.size.width && self.contentWidth) {
@@ -269,14 +295,6 @@ static CGFloat const MSSelectionHeight = 2.0f;
         }
         self.betweenMargin = (self.contentWidth - totleWidth + self.buttonInsets * 2.0f) /  (CGFloat)(self.buttonArray.count - 1);
     }
-}
-
-- (void)changLastImage:(UIImage *)image{
-    UIButton *button = self.buttonArray[self.buttonArray.count - 1];
-    [button setTitle:nil forState:UIControlStateNormal];
-    [button setImage:image forState:UIControlStateNormal];
-    [button layoutIfNeeded];
-    [self layoutSubviews];
 }
 
 @end

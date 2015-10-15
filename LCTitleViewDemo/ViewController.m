@@ -7,8 +7,11 @@
 //
 
 #import "ViewController.h"
+#import "MSTitleView.h"
 
 @interface ViewController ()
+
+@property (nonatomic, strong) IBOutlet MSTitleView *titleView;
 
 @end
 
@@ -16,7 +19,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+    self.titleView.titleArray = @[@"红星午餐", @"小食", @"甜点", @"酱料", @"下午茶",@"• • •"];
+    self.titleView.buttonNormalColor = [UIColor redColor];
+    self.titleView.buttonSelectedColor = [UIColor blackColor];
+    self.titleView.backgroundColor = [UIColor grayColor];
 }
 
 - (void)didReceiveMemoryWarning {
