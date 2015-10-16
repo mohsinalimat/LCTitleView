@@ -20,9 +20,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.titleView.titleArray = @[@"红星午餐", @"小食", @"甜点", @"酱料", @"下午茶",@"• • •"];
-    self.titleView.buttonNormalColor = [UIColor redColor];
+    self.titleView.buttonNormalColor = [UIColor whiteColor];
     self.titleView.buttonSelectedColor = [UIColor blackColor];
     self.titleView.backgroundColor = [UIColor grayColor];
+    self.titleView.buttonFont = [UIFont systemFontOfSize:13.0f];
+    self.titleView.buttonInsets = 10.0f;
+    self.titleView.contentWidth = 300.0f;
 }
 
 - (void)didReceiveMemoryWarning {

@@ -16,7 +16,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eHz-pQ-loE" customClass="MSTitleView">
+                            <view contentMode="scaleToFill" placeholderIntrinsicWidth="320" placeholderIntrinsicHeight="45" translatesAutoresizingMaskIntoConstraints="NO" id="eHz-pQ-loE" customClass="MSTitleView">
                                 <rect key="frame" x="0.0" y="20" width="320" height="45"/>
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -28,8 +28,7 @@
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="eHz-pQ-loE" secondAttribute="trailing" id="6kw-Bx-H0q"/>
-                            <constraint firstItem="eHz-pQ-loE" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="e4R-QS-vXn"/>
+                            <constraint firstItem="eHz-pQ-loE" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Q12-Al-IEb"/>
                             <constraint firstItem="eHz-pQ-loE" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="k6E-rj-i5N"/>
                         </constraints>
                     </view>

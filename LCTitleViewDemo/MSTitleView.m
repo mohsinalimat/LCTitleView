@@ -89,7 +89,7 @@ static CGFloat const MSSelectionHeight = 2.0f;
             UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
             [button setTitle:title forState:UIControlStateNormal];
             button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-            button.backgroundColor = [UIColor clearColor];
+            button.backgroundColor = [UIColor magentaColor];
             button.tag = idx;
             [button addTarget:self action:@selector(titleButtonAction:) forControlEvents:UIControlEventTouchUpInside];
             [self.contentView addSubview:button];
@@ -288,12 +288,17 @@ static CGFloat const MSSelectionHeight = 2.0f;
 
 - (void)layoutSubviews{
     UIButton *firstButton = self.buttonArray.firstObject;
-    if (firstButton.frame.size.width && self.contentWidth) {
+    if (firstButton.frame.size.width) {
         CGFloat totleWidth = 0.0f;
         for (UIButton *button in self.buttonArray) {
             totleWidth += button.frame.size.width;
         }
-        self.betweenMargin = (self.contentWidth - totleWidth + self.buttonInsets * 2.0f) /  (CGFloat)(self.buttonArray.count - 1);
+        if (self.frame.size.width) {
+            self.betweenMargin = (self.frame.size.width - totleWidth ) /  (CGFloat)(self.buttonArray.count - 1);
+        }
+        else{
+            self.betweenMargin = (self.contentWidth - totleWidth + self.buttonInsets * 2.0f) /  (CGFloat)(self.buttonArray.count - 1);
+        }
     }
 }
 
