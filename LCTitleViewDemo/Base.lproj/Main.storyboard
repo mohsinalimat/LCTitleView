@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="7ye-PQ-IdS">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
     </dependencies>
@@ -16,29 +16,66 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" placeholderIntrinsicWidth="320" placeholderIntrinsicHeight="45" translatesAutoresizingMaskIntoConstraints="NO" id="eHz-pQ-loE" customClass="MSTitleView">
-                                <rect key="frame" x="0.0" y="20" width="320" height="45"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yDU-Ar-Rbr">
+                                <rect key="frame" x="133" y="267" width="54" height="34"/>
                                 <animations/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <state key="normal" title="Button">
+                                    <color key="titleColor" red="0.46666666670000001" green="0.46666666670000001" blue="0.46666666670000001" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <state key="selected">
+                                    <color key="titleColor" red="0.96862745100000003" green="0.36078431370000003" blue="0.1843137255" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" red="0.96862745100000003" green="0.36078431370000003" blue="0.1843137255" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="changeTtitleView:" destination="BYZ-38-t0r" eventType="touchUpInside" id="2Qz-Hd-xvG"/>
+                                </connections>
+                            </button>
+                            <view contentMode="scaleToFill" placeholderIntrinsicWidth="320" placeholderIntrinsicHeight="infinite" translatesAutoresizingMaskIntoConstraints="NO" id="eHz-pQ-loE" customClass="MSTitleView">
+                                <rect key="frame" x="0.0" y="64" width="320" height="45"/>
+                                <animations/>
+                                <color key="backgroundColor" red="0.93333333330000001" green="0.93333333330000001" blue="0.93333333330000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="45" id="x1A-no-pjH"/>
                                 </constraints>
                             </view>
                         </subviews>
                         <animations/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.96862745100000003" green="0.96862745100000003" blue="0.96862745100000003" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="eHz-pQ-loE" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Q12-Al-IEb"/>
-                            <constraint firstItem="eHz-pQ-loE" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="k6E-rj-i5N"/>
+                            <constraint firstItem="yDU-Ar-Rbr" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="3aF-YE-qKl"/>
+                            <constraint firstItem="eHz-pQ-loE" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="Y8w-Bq-CVP"/>
+                            <constraint firstItem="yDU-Ar-Rbr" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Z8k-ID-9ol"/>
+                            <constraint firstAttribute="trailing" secondItem="eHz-pQ-loE" secondAttribute="trailing" id="ktI-js-jJd"/>
+                            <constraint firstItem="eHz-pQ-loE" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="w7c-a7-FgQ"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="lxl-wL-ZnC"/>
                     <connections>
                         <outlet property="titleView" destination="eHz-pQ-loE" id="wEO-KJ-H7L"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="214" y="349"/>
+            <point key="canvasLocation" x="-964" y="-238"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="K2q-wp-yfT">
+            <objects>
+                <navigationController id="7ye-PQ-IdS" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="VLh-JM-zOH">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <animations/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="JBp-jc-sYj"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="454-I4-6Rz" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1398" y="-238"/>
         </scene>
     </scenes>
 </document>
