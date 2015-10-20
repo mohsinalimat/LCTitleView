@@ -6,13 +6,13 @@
 //  Copyright © 2015 ___MISHI___. All rights reserved.
 //
 
-#import "MSTitleView.h"
+#import "LCTitleView.h"
 #import "Masonry.h"
 
-static CGFloat const LCSelectionOffsetWidth = 10.0f;
+static CGFloat const LCSelectionWidthScale = 1.2f;
 static CGFloat const LCSelectionHeight = 2.0f;
 
-@interface MSTitleView ()
+@interface LCTitleView ()
 
 @property (nonatomic, assign) CGFloat buttonSpace;// 间距
 @property (nonatomic, strong) NSMutableArray *buttonArray;
@@ -23,7 +23,7 @@ static CGFloat const LCSelectionHeight = 2.0f;
 
 @end
 
-@implementation MSTitleView
+@implementation LCTitleView
 
 - (instancetype)initWithTitls:(NSArray *)titlsArray clickBlock:(void (^)(UIButton *))block{
     self = [super init];
@@ -49,7 +49,7 @@ static CGFloat const LCSelectionHeight = 2.0f;
 }
 
 - (void)initUI{
-    _selectionOffsetWidth = LCSelectionOffsetWidth;
+    _selectionWidthScale = LCSelectionWidthScale;
     self.layer.masksToBounds = YES;
     self.backgroundColor = [UIColor clearColor];
     self.contentView = [[UIView alloc] init];
@@ -94,10 +94,7 @@ static CGFloat const LCSelectionHeight = 2.0f;
             [button addTarget:self action:@selector(titleButtonAction:) forControlEvents:UIControlEventTouchUpInside];
             [self.contentView addSubview:button];
             [self.buttonArray addObject:button];
-            
         }];
-        UIButton *firstButton = self.buttonArray.firstObject;
-        firstButton.selected = YES;
         [self.buttonArray enumerateObjectsUsingBlock:^(UIButton *button, NSUInteger idx, BOOL * _Nonnull stop) {
             [button mas_makeConstraints:^(MASConstraintMaker *make) {
                 if (idx) {
@@ -114,8 +111,23 @@ static CGFloat const LCSelectionHeight = 2.0f;
                 make.height.equalTo(self.contentView);
             }];
         }];
+        [self resetPropertys];
     }
     [self layoutSubviews];
+}
+
+- (void)resetPropertys{
+    self.margin = _margin;
+    self.buttonInsets = _buttonInsets;
+    self.buttonFont = _buttonFont;
+    self.buttonNormalColor = _buttonNormalColor;
+    self.buttonSelectedColor = _buttonSelectedColor;
+    self.bottomLineColor = _bottomLineColor;
+    self.showBottomLine = _showBottomLine;
+    self.selectionColor = _selectionColor;
+    self.selectionWidthScale = _selectionWidthScale;
+    self.showSelectionBar = _showSelectionBar;
+    self.currentIndex = _currentIndex;
 }
 
 //- (void)setNormalImages:(NSArray *)normalImages{
@@ -162,7 +174,6 @@ static CGFloat const LCSelectionHeight = 2.0f;
     [firstButton mas_updateConstraints:^(MASConstraintMaker *make) {
         make.leading.mas_equalTo(_margin);
     }];
-    
     [lastButton mas_updateConstraints:^(MASConstraintMaker *make) {
         make.trailing.mas_equalTo(-_margin);
     }];
@@ -170,54 +181,54 @@ static CGFloat const LCSelectionHeight = 2.0f;
 
 
 - (void)setCurrentIndex:(NSUInteger)currentIndex{
-    if (currentIndex > self.buttonArray.count - 1) {
+    if (currentIndex == _currentIndex) {
+        return;
+    }
+    if (currentIndex > _buttonArray.count - 1) {
         return;
     }
     _currentIndex = currentIndex;
-    for (UIButton *button in self.buttonArray) {
+    for (UIButton *button in _buttonArray) {
         button.selected = NO;
     }
-    UIButton *currentButton = self.buttonArray[_currentIndex];
+    UIButton *currentButton = _buttonArray[_currentIndex];
     currentButton.selected = !currentButton.selected;
     
-    if (self.showSelectionBar) {
-        [self layoutIfNeeded];
+    if (_showSelectionBar) {
         [self.selectionBar mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.centerX.equalTo(currentButton);
             make.height.mas_equalTo(LCSelectionHeight);
             make.bottom.equalTo(@0.0f);
-            make.width.mas_equalTo(currentButton.frame.size.width + _selectionOffsetWidth);
+            make.width.equalTo(currentButton.mas_width).multipliedBy(_selectionWidthScale);
         }];
-    
-        
         self.userInteractionEnabled = NO;
         [UIView animateWithDuration:0.25f animations:^{
             [self layoutIfNeeded];
-            
         } completion:^(BOOL finished) {
             self.userInteractionEnabled = YES;
         }];
-        
     }
 }
 
 - (void)setShowSelectionBar:(BOOL)showSelectionBar{
     _showSelectionBar = showSelectionBar;
     if (_showSelectionBar) {
+        UIButton *currentButton = self.buttonArray[_currentIndex];
         if (!_selectionBar) {
             self.selectionBar = [[UIView alloc] init];
             self.selectionBar.backgroundColor = _buttonSelectedColor;
             [self.contentView addSubview:_selectionBar];
-            
-            [self layoutIfNeeded];
-            UIButton *firstButton = self.buttonArray.firstObject;
             [self.selectionBar mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.centerX.equalTo(firstButton);
+                make.centerX.equalTo(currentButton);
                 make.height.mas_equalTo(LCSelectionHeight);
                 make.bottom.equalTo(@0.0f);
-                make.width.mas_equalTo(firstButton.frame.size.width + _selectionOffsetWidth);
+                make.width.equalTo(currentButton.mas_width).multipliedBy(_selectionWidthScale);
             }];
         }
+        [self.selectionBar mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.centerX.equalTo(currentButton);
+            make.width.equalTo(currentButton.mas_width).multipliedBy(_selectionWidthScale);
+        }];
     }
     else{
         [self.selectionBar removeFromSuperview];
@@ -295,15 +306,17 @@ static CGFloat const LCSelectionHeight = 2.0f;
     }
 }
 
-- (void)setSelectionOffsetWidth:(CGFloat)selectionOffsetWidth{
-    _selectionOffsetWidth = selectionOffsetWidth;
+
+- (void)setSelectionWidthScale:(CGFloat)selectionWidthScale{
+    _selectionWidthScale = selectionWidthScale;
     UIButton *currentButton = self.buttonArray[_currentIndex];
     if (_showSelectionBar) {
         [self.selectionBar mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.width.mas_equalTo(currentButton.frame.size.width + _selectionOffsetWidth);
+            make.width.equalTo(currentButton.mas_width).multipliedBy(_selectionWidthScale);
         }];
     }
 }
+
 
 //- (void)changTitles:(NSArray<NSString *> *)titles atIndexs:(NSArray<NSNumber *> *)indexs{
 //    for (NSNumber *index in indexs) {
@@ -321,17 +334,14 @@ static CGFloat const LCSelectionHeight = 2.0f;
 
 
 - (void)layoutSubviews{
-
-    UIButton *firstButton = self.buttonArray.firstObject;
+    UIButton *firstButton = _buttonArray.firstObject;
     if (firstButton.frame.size.width) {
         CGFloat totleWidth = 0.0f;
-        for (UIButton *button in self.buttonArray) {
+        for (UIButton *button in _buttonArray) {
             totleWidth += button.frame.size.width;
         }
-        
-        self.buttonSpace = (self.frame.size.width - totleWidth - _margin * 2.0f) /  (CGFloat)(self.buttonArray.count - 1);
+        self.buttonSpace = (self.frame.size.width - totleWidth - _margin * 2.0f) /  (CGFloat)(_buttonArray.count - 1);
     }
-    NSLog(@"%f", self.buttonSpace);
 }
 
 @end
