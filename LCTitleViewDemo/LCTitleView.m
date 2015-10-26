@@ -70,6 +70,7 @@ static CGFloat const LCSelectionHeight = 2.0f;
         make.bottom.equalTo(@0.0f);
         make.height.equalTo(@0.5f);
     }];
+    
 }
 
 - (NSMutableArray *)buttonArray{
@@ -317,21 +318,11 @@ static CGFloat const LCSelectionHeight = 2.0f;
     }
 }
 
-
-//- (void)changTitles:(NSArray<NSString *> *)titles atIndexs:(NSArray<NSNumber *> *)indexs{
-//    for (NSNumber *index in indexs) {
-//        UIButton *button = self.buttonArray[index.integerValue];
-//        [button setTitle:titles[index.integerValue] forState:UIControlStateNormal];
-//    }
-//}
-//- (void)changButtonSelectedColors:(NSArray<UIColor *> *)colors atIndexs:(NSArray<NSNumber *> *)indexs{
-//    for (NSNumber *index in indexs) {
-//        UIButton *button = self.buttonArray[index.integerValue];
-//        [button setTitleColor:colors[index.integerValue] forState:UIControlStateSelected];
-//        [button setTitleColor:colors[index.integerValue] forState:UIControlStateHighlighted];
-//    }
-//}
-
+- (void)setTargetScrollView:(UIScrollView *)targetScrollView{
+    _targetScrollView = targetScrollView;
+    [_targetScrollView removeObserver:self forKeyPath:@"contentOffset"];
+    [_targetScrollView addObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew context:NULL];
+}
 
 - (void)layoutSubviews{
     UIButton *firstButton = _buttonArray.firstObject;
@@ -342,6 +333,25 @@ static CGFloat const LCSelectionHeight = 2.0f;
         }
         self.buttonSpace = (self.frame.size.width - totleWidth - _margin * 2.0f) /  (CGFloat)(_buttonArray.count - 1);
     }
+}
+
+#pragma mark - KVO
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context{
+    
+    NSValue *newOffsetValue = change[NSKeyValueChangeNewKey];
+    CGPoint newOffset = [newOffsetValue CGPointValue];
+    CGFloat scrollViewWidth = [(UIScrollView *)object bounds].size.width;
+    CGFloat rate = newOffset.x / scrollViewWidth;
+    NSInteger currentIndex = (NSInteger)ceilf(rate);
+    
+//    [self.selectionBar mas_remakeConstraints:^(MASConstraintMaker *make) {
+//        make.centerX.equalTo(currentButton);
+//        make.height.mas_equalTo(LCSelectionHeight);
+//        make.bottom.equalTo(@0.0f);
+//        make.width.equalTo(currentButton.mas_width).multipliedBy(_selectionWidthScale);
+//    }];
+    
 }
 
 @end

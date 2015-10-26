@@ -10,13 +10,15 @@
 #import "LCTitleView.h"
 #import <Masonry.h>
 
-@interface ViewController ()<LCTitleViewDelegate>
+@interface ViewController ()<LCTitleViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate>
 
 @property (nonatomic, strong) IBOutlet LCTitleView *titleView;
 @property (nonatomic, strong) IBOutlet UISlider *fontSlider;
 @property (nonatomic, strong) IBOutlet UISlider *marginSlider;
 @property (nonatomic, strong) IBOutlet UILabel *fontLabel;
 @property (nonatomic, strong) IBOutlet UILabel *marginLabel;
+@property (nonatomic, strong) NSArray *titleArray;
+@property (nonatomic, strong) IBOutlet UICollectionView *collectionView;
 
 @end
 
@@ -24,7 +26,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.titleView.titleArray = @[@"午餐", @"小食", @"甜点甜点", @"酱料", @"下午茶",@"早餐"];
+    self.titleArray = @[@"午餐", @"小食", @"甜点甜点", @"酱料", @"下午茶",@"早餐"];
+    self.titleView.titleArray = _titleArray;
     self.titleView.buttonNormalColor = [UIColor colorWithRed:119.0f/255.0f green:119.0f/255.0f blue:119.0f/255.0f alpha:1.0f];
     self.titleView.buttonSelectedColor = [UIColor colorWithRed:33.0f/255.0f green:175.0f/255.0f blue:94.0f/255.0f alpha:1.0f];
     self.titleView.buttonFont = [UIFont systemFontOfSize:13.0f];
@@ -34,6 +37,7 @@
     self.titleView.delegate = self;
 
     self.titleView.backgroundColor = [UIColor whiteColor];
+    
 }
 
 
@@ -50,7 +54,9 @@
 }
 
 - (IBAction)changeTitlesAction:(id)sender{
-    self.titleView.titleArray = @[@"酱料", @"小食", @"小食", @"酱料", @"午餐",@"下午茶"];
+    self.titleArray = @[@"酱料", @"小食", @"小食", @"酱料", @"午餐",@"下午茶"];
+    self.titleView.titleArray = _titleArray;
+    [self.collectionView reloadData];
 }
 
 
@@ -65,5 +71,34 @@
     NSLog(@"%d", button.tag);
 }
 
+
+#pragma mark - UICollectionView Method
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
+    return _titleArray.count;
+}
+
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
+    return 1;
+}
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
+    return CGSizeMake(self.view.frame.size.width, collectionView.frame.size.height);
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
+    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
+    cell.backgroundColor = [UIColor whiteColor];
+    if (!cell.contentView.subviews.count) {
+        UILabel *label = [[UILabel alloc] init];
+        [cell.contentView addSubview:label];
+        [label mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.center.mas_equalTo(0.0f);
+        }];
+        label.font = [UIFont systemFontOfSize:26.0f];
+    }
+    UILabel *label = cell.contentView.subviews.firstObject;
+    label.text= [@(indexPath.row)  stringValue];
+    return cell;
+}
 
 @end
