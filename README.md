@@ -5,7 +5,9 @@
 ![Platform info](http://img.shields.io/cocoapods/p/LCTitleView.svg?style=flat)
 
 常用的标题视图
+##Demo
 
+![1](demo.gif)
 
 ##Installation
 
