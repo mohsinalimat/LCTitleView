@@ -72,8 +72,8 @@
             make.center.mas_equalTo(0.0f);
         }];
         label.font = [UIFont systemFontOfSize:26.0f];
-        cell.backgroundColor = [UIColor colorWithRed:(arc4random() % 255) / 255.0f green:(arc4random() % 255) / 255.0f blue:(arc4random() % 255) / 255.0f alpha:1.0f];
     }
+    cell.backgroundColor = [UIColor colorWithRed:(arc4random() % 255) / 255.0f green:(arc4random() % 255) / 255.0f blue:(arc4random() % 255) / 255.0f alpha:1.0f];
     UILabel *label = cell.contentView.subviews.firstObject;
     label.text= [@(indexPath.row)  stringValue];
     return cell;
