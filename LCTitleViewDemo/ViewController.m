@@ -13,10 +13,6 @@
 @interface ViewController ()<LCTitleViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate>
 
 @property (nonatomic, strong) IBOutlet LCTitleView *titleView;
-@property (nonatomic, strong) IBOutlet UISlider *fontSlider;
-@property (nonatomic, strong) IBOutlet UISlider *marginSlider;
-@property (nonatomic, strong) IBOutlet UILabel *fontLabel;
-@property (nonatomic, strong) IBOutlet UILabel *marginLabel;
 @property (nonatomic, strong) NSArray *titleArray;
 @property (nonatomic, strong) IBOutlet UICollectionView *collectionView;
 
@@ -41,24 +37,6 @@
 }
 
 
-- (IBAction)fontSliderAction:(id)sender{
-//    UISlider *slider = (UISlider *)sender;
-//    self.fontLabel.text = [NSString stringWithFormat:@"%.0f", slider.value];
-//    self.titleView.buttonFont = [UIFont systemFontOfSize:slider.value];
-}
-
-- (IBAction)marginSliderAction:(id)sender{
-//    UISlider *slider = (UISlider *)sender;
-//    self.marginLabel.text = [NSString stringWithFormat:@"%.0f", slider.value];
-//    self.titleView.margin = slider.value;
-}
-
-- (IBAction)changeTitlesAction:(id)sender{
-    self.titleArray = @[@"酱料", @"小食", @"小食", @"酱料", @"午餐",@"下午茶"];
-    self.titleView.titleArray = _titleArray;
-    [self.collectionView reloadData];
-}
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -68,7 +46,7 @@
 #pragma mark - LCTitleViewDelegate Method
 
 - (void)titleView:(LCTitleView *)titleView didButtonClick:(UIButton *)button{
-    NSLog(@"%d", button.tag);
+    [self.collectionView setContentOffset:CGPointMake(self.collectionView.frame.size.width * button.tag, 0.0f) animated:YES];
 }
 
 
@@ -87,7 +65,6 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
-    cell.backgroundColor = [UIColor whiteColor];
     if (!cell.contentView.subviews.count) {
         UILabel *label = [[UILabel alloc] init];
         [cell.contentView addSubview:label];
@@ -95,6 +72,7 @@
             make.center.mas_equalTo(0.0f);
         }];
         label.font = [UIFont systemFontOfSize:26.0f];
+        cell.backgroundColor = [UIColor colorWithRed:(arc4random() % 255) / 255.0f green:(arc4random() % 255) / 255.0f blue:(arc4random() % 255) / 255.0f alpha:1.0f];
     }
     UILabel *label = cell.contentView.subviews.firstObject;
     label.text= [@(indexPath.row)  stringValue];
