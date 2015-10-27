@@ -32,7 +32,7 @@
     self.titleView.showSelectionBar = YES;
     self.titleView.delegate = self;
     self.titleView.targetScrollView = _collectionView;
-    self.titleView.backgroundColor = [UIColor whiteColor];
+//    self.titleView.backgroundColor = [UIColor whiteColor];
 
 }
 
