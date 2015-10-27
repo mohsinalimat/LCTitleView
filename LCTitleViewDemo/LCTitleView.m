@@ -70,7 +70,10 @@ static CGFloat const LCSelectionHeight = 2.0f;
         make.bottom.equalTo(@0.0f);
         make.height.equalTo(@0.5f);
     }];
-    
+}
+
+- (void)dealloc{
+    [self.targetScrollView removeObserver:self forKeyPath:@"contentOffset"];
 }
 
 - (NSMutableArray *)buttonArray{
@@ -131,42 +134,6 @@ static CGFloat const LCSelectionHeight = 2.0f;
     self.currentIndex = _currentIndex;
 }
 
-//- (void)setNormalImages:(NSArray *)normalImages{
-//    _normalImages = normalImages;
-//    if (_normalImages) {
-//        [_normalImages enumerateObjectsUsingBlock:^(UIImage *image, NSUInteger idx, BOOL * _Nonnull stop) {
-//            UIButton *button = self.buttonArray[idx];
-//            [button setImage:image forState:UIControlStateNormal];
-//            [button layoutIfNeeded];
-//        }];
-//    }
-//    else{
-//        [self.buttonArray enumerateObjectsUsingBlock:^(UIButton *button, NSUInteger idx, BOOL * _Nonnull stop) {
-//            [button setImage:nil forState:UIControlStateNormal];
-//            [button layoutIfNeeded];
-//        }];
-//    }
-//    [self layoutSubviews];
-//}
-//
-//- (void)setSelectedImages:(NSArray *)selectedImages{
-//    _selectedImages = selectedImages;
-//    if (_selectedImages) {
-//        [_selectedImages enumerateObjectsUsingBlock:^(UIImage *image, NSUInteger idx, BOOL * _Nonnull stop) {
-//            UIButton *button = self.buttonArray[idx];
-//            [button setImage:image forState:UIControlStateSelected];
-//            [button layoutIfNeeded];
-//        }];
-//    }
-//    else{
-//        [self.buttonArray enumerateObjectsUsingBlock:^(UIButton *button, NSUInteger idx, BOOL * _Nonnull stop) {
-//            [button setImage:nil forState:UIControlStateSelected];
-//            [button layoutIfNeeded];
-//        }];
-//    }
-//    [self layoutSubviews];
-//}
-
 
 - (void)setMargin:(CGFloat)margin{
     _margin = margin;
@@ -196,8 +163,8 @@ static CGFloat const LCSelectionHeight = 2.0f;
     currentButton.selected = !currentButton.selected;
     
     if (_showSelectionBar) {
-        [self.selectionBar mas_remakeConstraints:^(MASConstraintMaker *make) {
-            make.centerX.equalTo(currentButton);
+        [self.selectionBar mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.centerX.equalTo(self.mas_leading).offset(currentButton.center.x);
             make.height.mas_equalTo(LCSelectionHeight);
             make.bottom.equalTo(@0.0f);
             make.width.equalTo(currentButton.mas_width).multipliedBy(_selectionWidthScale);
@@ -218,16 +185,16 @@ static CGFloat const LCSelectionHeight = 2.0f;
         if (!_selectionBar) {
             self.selectionBar = [[UIView alloc] init];
             self.selectionBar.backgroundColor = _buttonSelectedColor;
-            [self.contentView addSubview:_selectionBar];
+            [self addSubview:_selectionBar];
             [self.selectionBar mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.centerX.equalTo(currentButton);
+                make.centerX.equalTo(self.mas_leading).offset(currentButton.center.x);
                 make.height.mas_equalTo(LCSelectionHeight);
                 make.bottom.equalTo(@0.0f);
                 make.width.equalTo(currentButton.mas_width).multipliedBy(_selectionWidthScale);
             }];
         }
         [self.selectionBar mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.centerX.equalTo(currentButton);
+            make.centerX.equalTo(self.mas_leading).offset(currentButton.center.x);
             make.width.equalTo(currentButton.mas_width).multipliedBy(_selectionWidthScale);
         }];
     }
@@ -292,6 +259,35 @@ static CGFloat const LCSelectionHeight = 2.0f;
 
 
 
+
+- (void)setSelectionWidthScale:(CGFloat)selectionWidthScale{
+    _selectionWidthScale = selectionWidthScale;
+    UIButton *currentButton = self.buttonArray[_currentIndex];
+    if (_showSelectionBar) {
+        [self.selectionBar mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.width.equalTo(currentButton.mas_width).multipliedBy(_selectionWidthScale);
+        }];
+    }
+}
+
+- (void)setTargetScrollView:(UIScrollView *)targetScrollView{
+    _targetScrollView = targetScrollView;
+    [_targetScrollView addObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew context:NULL];
+}
+
+
+- (void)layoutSubviews{
+    UIButton *firstButton = _buttonArray.firstObject;
+    if (firstButton.frame.size.width) {
+        CGFloat totleWidth = 0.0f;
+        for (UIButton *button in _buttonArray) {
+            totleWidth += button.frame.size.width;
+        }
+        self.buttonSpace = (self.frame.size.width - totleWidth - _margin * 2.0f) /  (CGFloat)(_buttonArray.count - 1);
+    }
+}
+
+
 - (void)titleButtonAction:(id)sender{
     UIButton *button = (UIButton *)sender;
     NSInteger targetIndex = [self.buttonArray indexOfObject:button];
@@ -308,33 +304,6 @@ static CGFloat const LCSelectionHeight = 2.0f;
 }
 
 
-- (void)setSelectionWidthScale:(CGFloat)selectionWidthScale{
-    _selectionWidthScale = selectionWidthScale;
-    UIButton *currentButton = self.buttonArray[_currentIndex];
-    if (_showSelectionBar) {
-        [self.selectionBar mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.width.equalTo(currentButton.mas_width).multipliedBy(_selectionWidthScale);
-        }];
-    }
-}
-
-- (void)setTargetScrollView:(UIScrollView *)targetScrollView{
-    _targetScrollView = targetScrollView;
-    [_targetScrollView removeObserver:self forKeyPath:@"contentOffset"];
-    [_targetScrollView addObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew context:NULL];
-}
-
-- (void)layoutSubviews{
-    UIButton *firstButton = _buttonArray.firstObject;
-    if (firstButton.frame.size.width) {
-        CGFloat totleWidth = 0.0f;
-        for (UIButton *button in _buttonArray) {
-            totleWidth += button.frame.size.width;
-        }
-        self.buttonSpace = (self.frame.size.width - totleWidth - _margin * 2.0f) /  (CGFloat)(_buttonArray.count - 1);
-    }
-}
-
 #pragma mark - KVO
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context{
@@ -343,15 +312,23 @@ static CGFloat const LCSelectionHeight = 2.0f;
     CGPoint newOffset = [newOffsetValue CGPointValue];
     CGFloat scrollViewWidth = [(UIScrollView *)object bounds].size.width;
     CGFloat rate = newOffset.x / scrollViewWidth;
-    NSInteger currentIndex = (NSInteger)ceilf(rate);
     
-//    [self.selectionBar mas_remakeConstraints:^(MASConstraintMaker *make) {
-//        make.centerX.equalTo(currentButton);
-//        make.height.mas_equalTo(LCSelectionHeight);
-//        make.bottom.equalTo(@0.0f);
-//        make.width.equalTo(currentButton.mas_width).multipliedBy(_selectionWidthScale);
-//    }];
-    
+    if (rate >= 0.0f && rate <= _buttonArray.count - 1) {
+        NSInteger currentIndex = (NSInteger)roundf(rate);
+        UIButton *currentButton = self.buttonArray[currentIndex];
+        [self.selectionBar mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.centerX.equalTo(self.mas_leading).offset((self.frame.size.width + _buttonSpace - _margin * 2) * rate / _buttonArray.count + currentButton.frame.size.width * 0.5f + _margin);
+            make.height.mas_equalTo(LCSelectionHeight);
+            make.bottom.equalTo(@0.0f);
+            make.width.equalTo(currentButton.mas_width).multipliedBy(_selectionWidthScale);
+        }];
+        _currentIndex = currentIndex;
+        
+        for (UIButton *button in _buttonArray) {
+            button.selected = NO;
+        }
+        currentButton.selected = !currentButton.selected;
+    }
 }
 
 @end
