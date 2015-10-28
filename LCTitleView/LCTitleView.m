@@ -184,7 +184,7 @@ static CGFloat const LCSelectionHeight = 2.0f;
         UIButton *currentButton = self.buttonArray[_currentIndex];
         if (!_selectionBar) {
             self.selectionBar = [[UIView alloc] init];
-            self.selectionBar.backgroundColor = _buttonSelectedColor;
+            self.selectionBar.backgroundColor = _selectionColor ? : _buttonSelectedColor;
             [self addSubview:_selectionBar];
             [self.selectionBar mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.centerX.equalTo(self.mas_leading).offset(currentButton.center.x);
@@ -273,6 +273,11 @@ static CGFloat const LCSelectionHeight = 2.0f;
 - (void)setTargetScrollView:(UIScrollView *)targetScrollView{
     _targetScrollView = targetScrollView;
     [_targetScrollView addObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew context:NULL];
+}
+
+- (void)setSelectionColor:(UIColor *)selectionColor{
+    _selectionColor = selectionColor;
+    self.selectionBar.backgroundColor = _selectionColor;
 }
 
 

@@ -29,9 +29,11 @@
     self.titleView.buttonFont = [UIFont systemFontOfSize:13.0f];
 //    self.titleView.buttonInsets = 10.0f;
     self.titleView.margin = 10.0f;
+//    self.titleView.selectionColor = [UIColor redColor];
     self.titleView.showSelectionBar = YES;
     self.titleView.delegate = self;
     self.titleView.targetScrollView = _collectionView;
+    
 //    self.titleView.backgroundColor = [UIColor whiteColor];
 
 }
