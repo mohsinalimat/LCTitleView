@@ -16,7 +16,8 @@
 		DF2288351BCCAB0F002E1DB8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DF2288331BCCAB0F002E1DB8 /* LaunchScreen.storyboard */; };
 		DF2288401BCCAB0F002E1DB8 /* LCTitleViewDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DF22883F1BCCAB0F002E1DB8 /* LCTitleViewDemoTests.m */; };
 		DF22884B1BCCAB0F002E1DB8 /* LCTitleViewDemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = DF22884A1BCCAB0F002E1DB8 /* LCTitleViewDemoUITests.m */; };
-		DFCCDD1F1BCFE29900C7AC01 /* LCTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = DFCCDD1E1BCFE29900C7AC01 /* LCTitleView.m */; settings = {ASSET_TAGS = (); }; };
+		DF725AD61BE23B7A003EF4DE /* DemoPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF725AD51BE23B7A003EF4DE /* DemoPageViewController.m */; };
+		DFCCDD1F1BCFE29900C7AC01 /* LCTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = DFCCDD1E1BCFE29900C7AC01 /* LCTitleView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +56,8 @@
 		DF2288461BCCAB0F002E1DB8 /* LCTitleViewDemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LCTitleViewDemoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DF22884A1BCCAB0F002E1DB8 /* LCTitleViewDemoUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LCTitleViewDemoUITests.m; sourceTree = "<group>"; };
 		DF22884C1BCCAB0F002E1DB8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DF725AD41BE23B7A003EF4DE /* DemoPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoPageViewController.h; sourceTree = "<group>"; };
+		DF725AD51BE23B7A003EF4DE /* DemoPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemoPageViewController.m; sourceTree = "<group>"; };
 		DFCCDD1D1BCFE29900C7AC01 /* LCTitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCTitleView.h; sourceTree = "<group>"; };
 		DFCCDD1E1BCFE29900C7AC01 /* LCTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCTitleView.m; sourceTree = "<group>"; };
 		FB8A1839E584908F0EF67925 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -134,6 +137,8 @@
 				DF22882C1BCCAB0F002E1DB8 /* ViewController.m */,
 				DFCCDD1D1BCFE29900C7AC01 /* LCTitleView.h */,
 				DFCCDD1E1BCFE29900C7AC01 /* LCTitleView.m */,
+				DF725AD41BE23B7A003EF4DE /* DemoPageViewController.h */,
+				DF725AD51BE23B7A003EF4DE /* DemoPageViewController.m */,
 				DF22882E1BCCAB0F002E1DB8 /* Main.storyboard */,
 				DF2288311BCCAB0F002E1DB8 /* Assets.xcassets */,
 				DF2288331BCCAB0F002E1DB8 /* LaunchScreen.storyboard */,
@@ -336,6 +341,7 @@
 			files = (
 				DF22882D1BCCAB0F002E1DB8 /* ViewController.m in Sources */,
 				DFCCDD1F1BCFE29900C7AC01 /* LCTitleView.m in Sources */,
+				DF725AD61BE23B7A003EF4DE /* DemoPageViewController.m in Sources */,
 				DF22882A1BCCAB0F002E1DB8 /* AppDelegate.m in Sources */,
 				DF2288271BCCAB0F002E1DB8 /* main.m in Sources */,
 			);

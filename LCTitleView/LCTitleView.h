@@ -29,6 +29,7 @@
 @property (nonatomic, assign) CGFloat selectionWidthScale;// selectionBar 相对于button 宽度的比例，默认 1.2
 @property (nonatomic, assign, getter=isShowSelectionBar) BOOL showSelectionBar;// 是否显示 showSelectionBar，默认动画
 @property (nonatomic, assign) NSUInteger currentIndex;
+@property (nonatomic, strong) NSNumber *selectionMoveRate;
 @property (nonatomic, strong) UIScrollView *targetScrollView;
 @property (nonatomic, weak) id <LCTitleViewDelegate> delegate;
 

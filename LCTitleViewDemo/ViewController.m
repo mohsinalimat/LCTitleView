@@ -15,6 +15,7 @@
 @property (nonatomic, strong) IBOutlet LCTitleView *titleView;
 @property (nonatomic, strong) NSArray *titleArray;
 @property (nonatomic, strong) IBOutlet UICollectionView *collectionView;
+@property (nonatomic, strong) IBOutlet LCTitleView *otherTitleView;
 
 @end
 
@@ -34,11 +35,8 @@
     self.titleView.delegate = self;
     self.titleView.targetScrollView = _collectionView;
     
-//    self.titleView.backgroundColor = [UIColor whiteColor];
 
 }
-
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -48,6 +46,7 @@
 #pragma mark - LCTitleViewDelegate Method
 
 - (void)titleView:(LCTitleView *)titleView didButtonClick:(UIButton *)button{
+    NSLog(@"%ld", button.tag);
     [self.collectionView setContentOffset:CGPointMake(self.collectionView.frame.size.width * button.tag, 0.0f) animated:YES];
 }
 
