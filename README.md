@@ -4,7 +4,7 @@
 ![Pod version](http://img.shields.io/cocoapods/v/LCTitleView.svg?style=flat)
 ![Platform info](http://img.shields.io/cocoapods/p/LCTitleView.svg?style=flat)
 
-常用的标题视图
+常用的标题视图，支持UIPageViewController，请参考 Demo
 ##Demo
 
 ![1](demo.gif)
@@ -31,10 +31,6 @@ self.titleView.showSelectionBar = YES;
 self.titleView.delegate = self;
 self.titleView.targetScrollView = _collectionView;
 ```
-
-
-
-
 
 ##License
 ```
