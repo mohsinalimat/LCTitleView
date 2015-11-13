@@ -12,7 +12,6 @@
 #define LCSelectionColor [UIColor colorWithRed:238.0f/255.0f green:238.0f/255.0f blue:238.0f/255.0f alpha:1.0f]
 
 static CGFloat const LCSelectionHeight = 2.0f;
-static CGFloat const LCSelectionWidth = 50.0f;
 
 static void *LCContentOffsetObserverContext = &LCContentOffsetObserverContext;
 static void *LCSelectionMoveRateObserverContext = &LCSelectionMoveRateObserverContext;
@@ -55,7 +54,6 @@ static void *LCSelectionMoveRateObserverContext = &LCSelectionMoveRateObserverCo
 
 - (void)initUI{
     
-    self.selectionWidth = LCSelectionWidth;
     self.backgroundColor = [UIColor clearColor];
     self.contentView = [[UIView alloc] init];
     self.contentView.backgroundColor = [UIColor clearColor];
@@ -88,6 +86,24 @@ static void *LCSelectionMoveRateObserverContext = &LCSelectionMoveRateObserverCo
     }
     return _buttonArray;
 }
+
+
+- (void)resetPropertys{
+    self.margin = _margin;
+    self.buttonInsets = _buttonInsets;
+    self.buttonFont = _buttonFont;
+    self.buttonNormalColor = _buttonNormalColor;
+    self.buttonSelectedColor = _buttonSelectedColor;
+    self.bottomLineColor = _bottomLineColor;
+    self.showBottomLine = _showBottomLine;
+    self.selectionColor = _selectionColor;
+    self.selectionWidth = _selectionWidth;
+    self.showSelectionBar = _showSelectionBar;
+    self.currentIndex = _currentIndex;
+}
+
+
+#pragma mark - Setter Method
 
 - (void)setTitleArray:(NSArray *)titleArray{
     NSAssert(titleArray.count > 1, @"titleArray数量必须>=2");
@@ -126,20 +142,6 @@ static void *LCSelectionMoveRateObserverContext = &LCSelectionMoveRateObserverCo
         [self resetPropertys];
     }
     [self layoutSubviews];
-}
-
-- (void)resetPropertys{
-    self.margin = _margin;
-    self.buttonInsets = _buttonInsets;
-    self.buttonFont = _buttonFont;
-    self.buttonNormalColor = _buttonNormalColor;
-    self.buttonSelectedColor = _buttonSelectedColor;
-    self.bottomLineColor = _bottomLineColor;
-    self.showBottomLine = _showBottomLine;
-    self.selectionColor = _selectionColor;
-    self.selectionWidth = _selectionWidth;
-    self.showSelectionBar = _showSelectionBar;
-    self.currentIndex = _currentIndex;
 }
 
 
@@ -197,7 +199,7 @@ static void *LCSelectionMoveRateObserverContext = &LCSelectionMoveRateObserverCo
                 make.centerX.equalTo(self.mas_leading).offset(currentButton.center.x);
                 make.height.mas_equalTo(LCSelectionHeight);
                 make.bottom.equalTo(@0.0f);
-                make.width.mas_equalTo(self.selectionWidth);
+                make.width.mas_equalTo(self.selectionWidth ? : currentButton.frame.size.width);
             }];
         }
         [self.selectionBar mas_updateConstraints:^(MASConstraintMaker *make) {
@@ -288,6 +290,8 @@ static void *LCSelectionMoveRateObserverContext = &LCSelectionMoveRateObserverCo
     }
 }
 
+#pragma mark - layoutSubviews
+
 - (void)layoutSubviews{
     UIButton *firstButton = _buttonArray.firstObject;
     if (firstButton.frame.size.width) {
@@ -343,7 +347,6 @@ static void *LCSelectionMoveRateObserverContext = &LCSelectionMoveRateObserverCo
             }
             currentButton.selected = !currentButton.selected;
         }
-        
     }
     else{
         newRate = [change[NSKeyValueChangeNewKey] floatValue];
@@ -355,7 +358,6 @@ static void *LCSelectionMoveRateObserverContext = &LCSelectionMoveRateObserverCo
             UIButton *firstButton = self.buttonArray.firstObject;
             [self.selectionBar mas_updateConstraints:^(MASConstraintMaker *make) {
                 make.centerX.equalTo(self.mas_leading).offset((self.frame.size.width + _buttonSpace - _margin * 2) * newRate / _buttonArray.count + firstButton.frame.size.width * 0.5f + _margin);
-                
             }];
         }
     }
