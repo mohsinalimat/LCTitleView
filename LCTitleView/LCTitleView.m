@@ -9,8 +9,10 @@
 #import "LCTitleView.h"
 #import "Masonry.h"
 
-static CGFloat const LCSelectionWidthScale = 1.2f;
+#define LCSelectionColor [UIColor colorWithRed:238.0f/255.0f green:238.0f/255.0f blue:238.0f/255.0f alpha:1.0f]
+
 static CGFloat const LCSelectionHeight = 2.0f;
+static CGFloat const LCSelectionWidth = 50.0f;
 
 static void *LCContentOffsetObserverContext = &LCContentOffsetObserverContext;
 static void *LCSelectionMoveRateObserverContext = &LCSelectionMoveRateObserverContext;
@@ -53,8 +55,7 @@ static void *LCSelectionMoveRateObserverContext = &LCSelectionMoveRateObserverCo
 
 - (void)initUI{
     
-    _selectionWidthScale = LCSelectionWidthScale;
-    self.layer.masksToBounds = YES;
+    self.selectionWidth = LCSelectionWidth;
     self.backgroundColor = [UIColor clearColor];
     self.contentView = [[UIView alloc] init];
     self.contentView.backgroundColor = [UIColor clearColor];
@@ -66,7 +67,7 @@ static void *LCSelectionMoveRateObserverContext = &LCSelectionMoveRateObserverCo
     }];
     
     self.bottomLineView = [[UIView alloc] init];
-    self.bottomLineView.backgroundColor = [UIColor colorWithRed:238.0f/255.0f green:238.0f/255.0f blue:238.0f/255.0f alpha:1.0f];
+    self.bottomLineView.backgroundColor = LCSelectionColor;
     [self addSubview:_bottomLineView];
     [self.bottomLineView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leading.equalTo(@0.0f);
@@ -79,7 +80,6 @@ static void *LCSelectionMoveRateObserverContext = &LCSelectionMoveRateObserverCo
 - (void)dealloc{
     [self.targetScrollView removeObserver:self forKeyPath:@"contentOffset"];
     [self removeObserver:self forKeyPath:@"selectionMoveRate"];
-    
 }
 
 - (NSMutableArray *)buttonArray{
@@ -137,7 +137,7 @@ static void *LCSelectionMoveRateObserverContext = &LCSelectionMoveRateObserverCo
     self.bottomLineColor = _bottomLineColor;
     self.showBottomLine = _showBottomLine;
     self.selectionColor = _selectionColor;
-    self.selectionWidthScale = _selectionWidthScale;
+    self.selectionWidth = _selectionWidth;
     self.showSelectionBar = _showSelectionBar;
     self.currentIndex = _currentIndex;
 }
@@ -197,7 +197,7 @@ static void *LCSelectionMoveRateObserverContext = &LCSelectionMoveRateObserverCo
                 make.centerX.equalTo(self.mas_leading).offset(currentButton.center.x);
                 make.height.mas_equalTo(LCSelectionHeight);
                 make.bottom.equalTo(@0.0f);
-                make.width.equalTo(currentButton.mas_width).multipliedBy(_selectionWidthScale);
+                make.width.mas_equalTo(self.selectionWidth);
             }];
         }
         [self.selectionBar mas_updateConstraints:^(MASConstraintMaker *make) {
@@ -264,14 +264,11 @@ static void *LCSelectionMoveRateObserverContext = &LCSelectionMoveRateObserverCo
 }
 
 
-- (void)setSelectionWidthScale:(CGFloat)selectionWidthScale{
-    _selectionWidthScale = selectionWidthScale;
-    UIButton *currentButton = self.buttonArray[_currentIndex];
-    if (_showSelectionBar) {
-        [self.selectionBar mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.width.equalTo(currentButton.mas_width).multipliedBy(_selectionWidthScale);
-        }];
-    }
+- (void)setSelectionWidth:(CGFloat)selectionWidth{
+    _selectionWidth = selectionWidth;
+    [self.selectionBar mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.width.mas_equalTo(_selectionWidth);
+    }];
 }
 
 - (void)setTargetScrollView:(UIScrollView *)targetScrollView{
@@ -349,9 +346,9 @@ static void *LCSelectionMoveRateObserverContext = &LCSelectionMoveRateObserverCo
         
     }
     else{
-        newRate = ABS([change[NSKeyValueChangeNewKey] floatValue]);
-        if (!newRate) {
-            return;
+        newRate = [change[NSKeyValueChangeNewKey] floatValue];
+        if (newRate < 0.0f) {
+            newRate = 0.0f;
         }
         if (newRate >= 0.0f && newRate <= _buttonArray.count - 1) {
             

@@ -25,7 +25,7 @@
                                 </constraints>
                             </view>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="45D-Ge-WmJ">
-                                <rect key="frame" x="0.0" y="109" width="320" height="459"/>
+                                <rect key="frame" x="0.0" y="109" width="320" height="410"/>
                                 <animations/>
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="9pa-yG-zfz">
                                     <size key="itemSize" width="320" height="121.5"/>
@@ -74,7 +74,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1726" y="-1489"/>
+            <point key="canvasLocation" x="-2063" y="-1460"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="X0k-aD-T1j">
@@ -120,7 +120,7 @@
                     <navigationItem key="navigationItem" id="k6Q-Ra-pXn">
                         <nil key="title"/>
                         <view key="titleView" contentMode="scaleToFill" id="Xye-m3-4Eb" customClass="LCTitleView">
-                            <rect key="frame" x="100" y="0.0" width="120" height="44"/>
+                            <rect key="frame" x="26" y="0.0" width="268" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <animations/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>

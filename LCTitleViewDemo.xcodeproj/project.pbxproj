@@ -17,7 +17,7 @@
 		DF2288401BCCAB0F002E1DB8 /* LCTitleViewDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DF22883F1BCCAB0F002E1DB8 /* LCTitleViewDemoTests.m */; };
 		DF22884B1BCCAB0F002E1DB8 /* LCTitleViewDemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = DF22884A1BCCAB0F002E1DB8 /* LCTitleViewDemoUITests.m */; };
 		DF725AD61BE23B7A003EF4DE /* DemoPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF725AD51BE23B7A003EF4DE /* DemoPageViewController.m */; };
-		DFCCDD1F1BCFE29900C7AC01 /* LCTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = DFCCDD1E1BCFE29900C7AC01 /* LCTitleView.m */; };
+		DFF89BE01BF5AEED000B1BE3 /* LCTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF89BDF1BF5AEED000B1BE3 /* LCTitleView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,8 +58,8 @@
 		DF22884C1BCCAB0F002E1DB8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DF725AD41BE23B7A003EF4DE /* DemoPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoPageViewController.h; sourceTree = "<group>"; };
 		DF725AD51BE23B7A003EF4DE /* DemoPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemoPageViewController.m; sourceTree = "<group>"; };
-		DFCCDD1D1BCFE29900C7AC01 /* LCTitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCTitleView.h; sourceTree = "<group>"; };
-		DFCCDD1E1BCFE29900C7AC01 /* LCTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCTitleView.m; sourceTree = "<group>"; };
+		DFF89BDE1BF5AEED000B1BE3 /* LCTitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCTitleView.h; sourceTree = "<group>"; };
+		DFF89BDF1BF5AEED000B1BE3 /* LCTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCTitleView.m; sourceTree = "<group>"; };
 		FB8A1839E584908F0EF67925 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -131,12 +131,11 @@
 		DF2288241BCCAB0F002E1DB8 /* LCTitleViewDemo */ = {
 			isa = PBXGroup;
 			children = (
+				DFF89BDD1BF5AEED000B1BE3 /* LCTitleView */,
 				DF2288281BCCAB0F002E1DB8 /* AppDelegate.h */,
 				DF2288291BCCAB0F002E1DB8 /* AppDelegate.m */,
 				DF22882B1BCCAB0F002E1DB8 /* ViewController.h */,
 				DF22882C1BCCAB0F002E1DB8 /* ViewController.m */,
-				DFCCDD1D1BCFE29900C7AC01 /* LCTitleView.h */,
-				DFCCDD1E1BCFE29900C7AC01 /* LCTitleView.m */,
 				DF725AD41BE23B7A003EF4DE /* DemoPageViewController.h */,
 				DF725AD51BE23B7A003EF4DE /* DemoPageViewController.m */,
 				DF22882E1BCCAB0F002E1DB8 /* Main.storyboard */,
@@ -174,6 +173,15 @@
 			path = LCTitleViewDemoUITests;
 			sourceTree = "<group>";
 		};
+		DFF89BDD1BF5AEED000B1BE3 /* LCTitleView */ = {
+			isa = PBXGroup;
+			children = (
+				DFF89BDE1BF5AEED000B1BE3 /* LCTitleView.h */,
+				DFF89BDF1BF5AEED000B1BE3 /* LCTitleView.m */,
+			);
+			path = LCTitleView;
+			sourceTree = SOURCE_ROOT;
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -186,6 +194,7 @@
 				DF22881F1BCCAB0F002E1DB8 /* Frameworks */,
 				DF2288201BCCAB0F002E1DB8 /* Resources */,
 				FAEE0A663F05C06D6155FA2E /* Copy Pods Resources */,
+				14609EBA3BF27404BD9F088F /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -302,6 +311,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		14609EBA3BF27404BD9F088F /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		F1E2B22FF33F07638BD5E108 /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -340,9 +364,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				DF22882D1BCCAB0F002E1DB8 /* ViewController.m in Sources */,
-				DFCCDD1F1BCFE29900C7AC01 /* LCTitleView.m in Sources */,
 				DF725AD61BE23B7A003EF4DE /* DemoPageViewController.m in Sources */,
 				DF22882A1BCCAB0F002E1DB8 /* AppDelegate.m in Sources */,
+				DFF89BE01BF5AEED000B1BE3 /* LCTitleView.m in Sources */,
 				DF2288271BCCAB0F002E1DB8 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

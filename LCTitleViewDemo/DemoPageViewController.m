@@ -34,11 +34,13 @@
     self.delegate = self;
     self.dataSource = self;
     
-    self.titleView.titleArray = @[@"午餐", @"早餐"];
+    self.titleView.titleArray = @[@"午餐", @"早餐早餐早餐"];
     self.titleView.buttonNormalColor = [UIColor colorWithRed:119.0f/255.0f green:119.0f/255.0f blue:119.0f/255.0f alpha:1.0f];
     self.titleView.buttonSelectedColor = [UIColor colorWithRed:33.0f/255.0f green:175.0f/255.0f blue:94.0f/255.0f alpha:1.0f];
     self.titleView.showSelectionBar = YES;
     self.titleView.delegate = self;
+    self.titleView.selectionWidth = 50.0f;
+//    self.titleView.backgroundColor = [UIColor blackColor];
     
 }
 
@@ -88,7 +90,6 @@
     CGFloat xOffset = scrollViewWidth - scrollView.contentOffset.x;
     CGFloat rate = (_titleView.currentIndex * scrollViewWidth - xOffset)/scrollViewWidth;
     self.titleView.selectionMoveRate = @(rate);
-    
 }
 
 #pragma mark - UIPageViewController Delegate Method
@@ -117,15 +118,10 @@
 }
 
 
-
 - (void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray *)previousViewControllers transitionCompleted:(BOOL)completed {
     if (completed) {
         self.titleView.currentIndex = [_viewControllerArray indexOfObject:[pageViewController.viewControllers lastObject]];
     }
 }
-
-
-
-
 
 @end

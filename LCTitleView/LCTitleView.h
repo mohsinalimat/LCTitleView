@@ -26,8 +26,8 @@
 @property (nonatomic, strong) UIColor *bottomLineColor;// 底部线的颜色
 @property (nonatomic, assign, getter=isShowBottomLine) BOOL showBottomLine;// 是否显示底部的0.5像素的线
 @property (nonatomic, strong) UIColor *selectionColor;// 默认和 buttonSelectedColor 相同
-@property (nonatomic, assign) CGFloat selectionWidthScale;// selectionBar 相对于button 宽度的比例，默认 1.2
-@property (nonatomic, assign, getter=isShowSelectionBar) BOOL showSelectionBar;// 是否显示 showSelectionBar，默认动画
+@property (nonatomic, assign) CGFloat selectionWidth;//
+@property (nonatomic, assign, getter=isShowSelectionBar) BOOL showSelectionBar;// 是否显示 showSelectionBar，默认启用动画
 @property (nonatomic, assign) NSUInteger currentIndex;
 @property (nonatomic, strong) NSNumber *selectionMoveRate;
 @property (nonatomic, strong) UIScrollView *targetScrollView;
