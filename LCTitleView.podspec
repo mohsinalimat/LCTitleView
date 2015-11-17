@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "LCTitleView"
-  s.version          = "1.0.3"
+  s.version          = "1.0.4"
   s.summary          = "常用的标题视图 Simple title view"
   s.homepage         = "https://github.com/bawn/LCTitleView"
   s.license          = 'MIT'

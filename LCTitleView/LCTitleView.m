@@ -23,7 +23,6 @@ static void *LCSelectionMoveRateObserverContext = &LCSelectionMoveRateObserverCo
 @property (nonatomic, strong) UIView *selectionBar;
 @property (nonatomic, strong) void (^ clickBlock)(UIButton *button);
 @property (nonatomic, strong) UIView *contentView;
-@property (nonatomic, strong) UIView *bottomLineView;
 
 @end
 
@@ -63,16 +62,6 @@ static void *LCSelectionMoveRateObserverContext = &LCSelectionMoveRateObserverCo
         make.top.equalTo(self);
         make.bottom.equalTo(self);
     }];
-    
-    self.bottomLineView = [[UIView alloc] init];
-    self.bottomLineView.backgroundColor = LCSelectionColor;
-    [self addSubview:_bottomLineView];
-    [self.bottomLineView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.leading.equalTo(@0.0f);
-        make.trailing.equalTo(@0.0f);
-        make.bottom.equalTo(@0.0f);
-        make.height.equalTo(@0.5f);
-    }];
 }
 
 - (void)dealloc{
@@ -95,7 +84,6 @@ static void *LCSelectionMoveRateObserverContext = &LCSelectionMoveRateObserverCo
     self.buttonNormalColor = _buttonNormalColor;
     self.buttonSelectedColor = _buttonSelectedColor;
     self.bottomLineColor = _bottomLineColor;
-    self.showBottomLine = _showBottomLine;
     self.selectionColor = _selectionColor;
     self.selectionWidth = _selectionWidth;
     self.showSelectionBar = _showSelectionBar;

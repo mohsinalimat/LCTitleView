@@ -24,7 +24,6 @@
 @property (nonatomic, strong) UIColor *buttonNormalColor;
 @property (nonatomic, strong) UIColor *buttonSelectedColor;
 @property (nonatomic, strong) UIColor *bottomLineColor;// 底部线的颜色
-@property (nonatomic, assign, getter=isShowBottomLine) BOOL showBottomLine;// 是否显示底部的0.5像素的线
 @property (nonatomic, strong) UIColor *selectionColor;// 默认和 buttonSelectedColor 相同
 @property (nonatomic, assign) CGFloat selectionWidth;//
 @property (nonatomic, assign, getter=isShowSelectionBar) BOOL showSelectionBar;// 是否显示 showSelectionBar，默认启用动画
