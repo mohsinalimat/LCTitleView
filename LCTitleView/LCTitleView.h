@@ -8,6 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+typedef NS_ENUM(NSUInteger, LCTitleViewModel) {
+    LCTitleViewNormal,
+    LCTitleViewScroll,
+    LCTitleViewPage,
+};
+
 @class LCTitleView;
 @protocol LCTitleViewDelegate <NSObject>
 
@@ -29,6 +35,7 @@
 @property (nonatomic, assign, getter=isShowSelectionBar) BOOL showSelectionBar;// 是否显示 showSelectionBar，默认启用动画
 @property (nonatomic, assign) NSUInteger currentIndex;
 @property (nonatomic, strong) NSNumber *selectionMoveRate;
+@property (nonatomic, assign) LCTitleViewModel model;
 @property (nonatomic, strong) UIScrollView *targetScrollView;
 @property (nonatomic, weak) id <LCTitleViewDelegate> delegate;
 

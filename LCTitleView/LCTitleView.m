@@ -24,6 +24,7 @@ static void *LCSelectionMoveRateObserverContext = &LCSelectionMoveRateObserverCo
 @property (nonatomic, strong) void (^ clickBlock)(UIButton *button);
 @property (nonatomic, strong) UIView *contentView;
 
+
 @end
 
 @implementation LCTitleView
@@ -33,7 +34,7 @@ static void *LCSelectionMoveRateObserverContext = &LCSelectionMoveRateObserverCo
     if (self) {
         _titleArray = titlsArray;
         _clickBlock = [block copy];
-        [self initUI];
+        [self initialization];
     }
     return self;
 }
@@ -41,17 +42,17 @@ static void *LCSelectionMoveRateObserverContext = &LCSelectionMoveRateObserverCo
 - (instancetype)init{
     self = [super init];
     if (self) {
-        [self initUI];
+        [self initialization];
     }
     return self;
 }
 
 - (void)awakeFromNib{
     [super awakeFromNib];
-    [self initUI];
+    [self initialization];
 }
 
-- (void)initUI{
+- (void)initialization{
     
     self.backgroundColor = [UIColor clearColor];
     self.contentView = [[UIView alloc] init];
@@ -62,6 +63,8 @@ static void *LCSelectionMoveRateObserverContext = &LCSelectionMoveRateObserverCo
         make.top.equalTo(self);
         make.bottom.equalTo(self);
     }];
+    
+    [self addObserver:self forKeyPath:@"selectionMoveRate" options:NSKeyValueObservingOptionNew context:LCSelectionMoveRateObserverContext];
 }
 
 - (void)dealloc{
@@ -159,7 +162,7 @@ static void *LCSelectionMoveRateObserverContext = &LCSelectionMoveRateObserverCo
     }
     UIButton *currentButton = _buttonArray[_currentIndex];
     currentButton.selected = !currentButton.selected;
-    if (self.observationInfo) {
+    if (_model != LCTitleViewNormal) {
         return;
     }
     if (_showSelectionBar) {
@@ -271,13 +274,6 @@ static void *LCSelectionMoveRateObserverContext = &LCSelectionMoveRateObserverCo
     self.selectionBar.backgroundColor = _selectionColor;
 }
 
-- (void)setSelectionMoveRate:(NSNumber *)selectionMoveRate{
-    _selectionMoveRate = selectionMoveRate;
-    if (!self.observationInfo) {
-        [self addObserver:self forKeyPath:@"selectionMoveRate" options:NSKeyValueObservingOptionNew context:LCSelectionMoveRateObserverContext];
-    }
-}
-
 #pragma mark - layoutSubviews
 
 - (void)layoutSubviews{
@@ -295,7 +291,7 @@ static void *LCSelectionMoveRateObserverContext = &LCSelectionMoveRateObserverCo
 #pragma mark - Action
 
 - (void)titleButtonAction:(id)sender{
-    if (!_targetScrollView && !self.observationInfo) {
+    if (_model == LCTitleViewNormal) {
         UIButton *button = (UIButton *)sender;
         NSInteger targetIndex = [self.buttonArray indexOfObject:button];
         if (targetIndex == self.currentIndex) {
@@ -316,6 +312,7 @@ static void *LCSelectionMoveRateObserverContext = &LCSelectionMoveRateObserverCo
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context{
     CGFloat newRate = 0.0f;
+    
     if (context == LCContentOffsetObserverContext) {
         NSValue *newOffsetValue = change[NSKeyValueChangeNewKey];
         CGPoint newOffset = [newOffsetValue CGPointValue];

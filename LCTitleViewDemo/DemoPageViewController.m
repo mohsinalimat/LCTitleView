@@ -42,6 +42,7 @@
     self.titleView.showSelectionBar = YES;
     self.titleView.delegate = self;
     self.titleView.selectionWidth = 50.0f;
+    self.titleView.model = LCTitleViewPage;
 //    self.titleView.backgroundColor = [UIColor blackColor];
     
 }
@@ -87,16 +88,6 @@
                 }];
             }
         }
-        
-        
-        
-        
-        
-//        [self setViewControllers:@[self.viewControllerArray[button.tag]] direction:navigationDirection ? UIPageViewControllerNavigationDirectionForward : UIPageViewControllerNavigationDirectionReverse animated:YES completion:^(BOOL complete){
-//            if (complete) {
-//                weakSelf.titleView.currentIndex = button.tag;
-//            }
-//        }];
     }
 }
 
